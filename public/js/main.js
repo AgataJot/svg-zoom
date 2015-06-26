@@ -104,6 +104,80 @@ var APP = function APP() {
       return this;
     },
 
+    test2: function test2() {
+
+      var s = Snap('#test');
+      var $test = $('#test').width(500).height(500).css('background', 'yellow');
+      window.clippedCircle = s.circle(200, 200, 15);
+      var tux = Snap.load('images/uk_union_flag.svg', function (loadedFragment2) {
+        window.flagGroup = s.group(s.rect(0, 0, 311, 204).attr({
+          fill: 'white'
+        }));
+        window.f = window.flagGroup.append(loadedFragment2);
+
+        window.copy = s.use(window.flagGroup);
+        window.copy.attr({
+          mask: window.clippedImage
+        });
+        window.clippedI = s.group(window.copy);
+        var scaleFactor = 2;
+        window.clippedI.transform('T246,249,s' + scaleFactor);
+
+        //Cache Vairables
+        var clippedImage;
+        var cp;
+        var mycircle;
+        var greencircle;
+        var gMouseDown = 0;
+
+        //Start Up Event and get Ids
+
+        clippedImage = window.clippedI;
+        //cp = document.getElementById("clipgroup");
+        mycircle = window.clippedCircle; //document.getElementById("clipcircle");
+        //greencircle = document.getElementById("greencircle");
+        function mouseMove(dx, dy) {
+          if (!gMouseDown) return;
+
+          mycircle.attr({
+            cx: dx,
+            cy: dy
+          });
+
+          //greencircle.setAttributeNS(null, "cx", x);
+          //greencircle.setAttributeNS(null, "cy", y);
+
+          resizeImage(dx, dy);
+        }
+
+        // Mouse is down
+        function mouseDown(evt) {
+          gMouseDown = 1;
+        }
+
+        // Mouse is not down
+        function mouseUp(evt) {
+          gMouseDown = 0;
+        }
+        //clip-path="url(#clipgroup)"
+        // Resize and transform the content
+        function resizeImage(x, y) {
+          var newx = x - scaleFactor * x;
+          var newy = y - scaleFactor * y;
+
+          // var tx = "translate(" + newx + "," + newy + ")";
+          //,scale(" + scaleFactor + "," + scaleFactor + ")
+          // clippedImage.attr({
+          //   transform: tx
+          // });
+          // window.clippedI.transform('s'+scaleFactor)
+          window.clippedI.transform('t' + newx + ',' + newy + 's' + scaleFactor);
+        }
+        window.clippedI.drag(mouseMove, mouseDown, mouseUp);
+        ;
+      });
+    },
+
     foo: 'bar'
   };
 };
@@ -138,6 +212,6 @@ var APP = require('./components/app');
 var $ = require('jQuery');
 
 var app = new APP();
-app.init().test();
+app.init().test2();
 
 },{"./components/app":2,"jQuery":1}]},{},[3])

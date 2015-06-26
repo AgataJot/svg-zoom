@@ -25,4 +25,4 @@ var APP = require('./components/app');
 var $ = require('jQuery');
 
 var app = new APP();
-app.init().test();
+app.init().test2();
