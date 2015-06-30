@@ -21,8 +21,14 @@
 //     Search.init();
 //   });
 // });
-var APP = require('./components/app');
 var $ = require('jQuery');
+var React = require('react/addons');
+var APP = require('./components/app');
+var ReactedApp = require('./components/reactedapp');
+
 
 var app = new APP();
-app.init().test2();
+// var reactedApp = new ReactedApp();
+// module.exports = APP;
+
+// app.init().test2();

@@ -1,6 +1,7 @@
 var gulp = require('gulp')
   , browserify = require('gulp-browserify')
   , babelify = require('babelify')
+  , reactify = require('reactify')
   , concat = require('gulp-concat')
   , nib = require('nib')
   , stylus = require('gulp-stylus')
@@ -42,7 +43,9 @@ gulp.task('stylus', function () {
 })
 
 gulp.task('browserify', function() {
-    gulp.src(['node_modules/snapsvg/dist/snap.svg.js'])
+    gulp.src([
+      'node_modules/snapsvg/dist/snap.svg.js'
+      ])
       .pipe(concat('lib.js'))
         .on('error', handleError)
       .pipe(gulp.dest('public/js'))
@@ -50,7 +53,7 @@ gulp.task('browserify', function() {
 
     gulp.src(['src/js/main.js'])
       .pipe(browserify({
-        transform: [babelify]
+        transform: [babelify, reactify]
       }))
         .on('error', handleError)
       // .pipe(concat('main.js'))

@@ -22,6 +22,7 @@
 //   });
 // });
 var $ = require('jQuery');
+
 var APP = function() {
   return {
     init: function() {
@@ -133,7 +134,7 @@ var APP = function() {
         window.clippedI.transform('T246,249,s'+scaleFactor)
 
 
-      
+
         //Cache Vairables
         var clippedImage;
         var cp;
@@ -142,7 +143,7 @@ var APP = function() {
         var gMouseDown = 0;
 
         //Start Up Event and get Ids
-        
+
         clippedImage = window.clippedI;
         //cp = document.getElementById("clipgroup");
         mycircle =  window.clippedCircle;//document.getElementById("clipcircle");
