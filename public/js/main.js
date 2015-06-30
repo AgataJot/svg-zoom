@@ -19918,15 +19918,15 @@ var Question = React.createClass({
 	componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 		if (nextProps.data) {}
 	},
-	handleSubmit: function handleSubmit() {},
 	renderCheckbox: function renderCheckbox(answer, i) {
 		return React.createElement(
 			'span',
-			null,
-			React.createElement('input', { key: i, type: 'checkbox', name: 'vehicle', placeholder: '{answer.text}', value: '{answer.text}', ref: 'text' }),
+			{ key: i },
+			React.createElement('input', { type: 'checkbox', placeholder: answer.text, value: answer.text, ref: 'text' }),
 			answer.text
 		);
 	},
+
 	checkboxes: function checkboxes() {
 		var self = this;
 		var checkboxes = [];
@@ -19938,10 +19938,14 @@ var Question = React.createClass({
 		return React.createElement(
 			'div',
 			null,
-			checkboxes,
-			React.createElement('input', { type: 'checkbox', name: 'vehicle', value: 'Car' })
+			checkboxes
 		);
 	},
+	handleSkip: function handleSkip(e) {
+		e.preventDefault();
+		this.props.onQuestionSkip({ author: 'Agata', text: this.props.title });
+	},
+	handleSubmit: function handleSubmit() {},
 	render: function render() {
 		console.log('render', _counter++);
 		console.log(this.props);
@@ -19961,7 +19965,8 @@ var Question = React.createClass({
 					'form',
 					{ className: 'commentForm', onSubmit: this.handleSubmit },
 					this[type](),
-					React.createElement('input', { type: 'submit', value: 'Post' })
+					React.createElement('input', { type: 'submit', value: 'Post' }),
+					React.createElement('input', { type: 'button', value: 'Skip', onClick: this.handleSkip })
 				)
 			)
 		);
@@ -19999,11 +20004,15 @@ var ReactedApp = React.createClass({
 		//   });
 		console.log('dataset');
 	},
+	handleQuestionSkip: function handleQuestionSkip(author, text) {
+		console.log(author, text);
+	},
 	render: function render() {
 		return React.createElement(
 			'div',
 			{ id: 'hey' },
 			React.createElement(Question, {
+				onQuestionSkip: this.handleQuestionSkip,
 				title: 'Question number one',
 				type: 'checkboxes',
 				answers: [{ text: 'I have a bike' }, { text: 'I have a car' }] }),
