@@ -1,0 +1,21 @@
+{
+  "questions": [
+    {
+      "title": "question number 1",
+      "type": "checkbox",
+      "answers": [
+        {"text": "I have a bike"},
+        {"text": "I have a car"}
+      ]
+    },
+    {
+      "title": "biggest meal",
+      "type": "radio",
+      "answers": [
+        {"text": "breakky"},
+        {"text": "lunch"},
+        {"text": "dinner"}
+      ]
+    }
+  ]
+}

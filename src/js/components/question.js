@@ -3,14 +3,18 @@ var _counter = 0;
 
 var Question =
 	React.createClass({
-		displayName: 'Foobar',
-		componentWillMount(a, b) {
-			console.log(a, b);
+		displayName: 'Question View',
+		componentWillMount() {
 		},
+
 		componentWillReceiveProps:function(nextProps){
-			if(nextProps.data){
-			}
+			console.warn('q will receive props', nextProps);
 		},
+
+		// shouldComponentUpdate: function(nextProps, nextState) {
+		// 	console.warn('q should update', nextProps, nextState);
+		// },
+
 		renderCheckbox(answer, i) {
 			return (
 				<span key={i}>
@@ -19,11 +23,18 @@ var Question =
 			)
 		},
 
-		checkboxes() {
+		renderRadiobutton(answer, i) {
+			return (
+				<span key={i}>
+					<input type="radio" placeholder={answer.text} value={answer.text} ref="text"  />{answer.text}
+				</span>
+			)
+		},
+
+		checkbox() {
 			var self = this;
 			var checkboxes = [];
 			this.props.answers.forEach(function(answer, i){
-				console.log(i);
 				checkboxes.push(self.renderCheckbox(answer, i));
 			})
 
@@ -33,19 +44,34 @@ var Question =
 				</div>
 			)
 		},
+
+		radio() {
+			var self = this;
+			var radiobuttons = [];
+			this.props.answers.forEach(function(answer, i){
+				radiobuttons.push(self.renderRadiobutton(answer, i));
+			})
+
+			return(
+				<div>
+					{radiobuttons}
+				</div>
+			)
+		},
+
 		handleSkip(e) {
 			e.preventDefault();
 			this.props.onQuestionSkip({author: 'Agata', text: this.props.title});
-
 		},
+
 		handleSubmit(e) {
 			e.preventDefault();
 			e.stopPropagation();
 		},
+
 		render(){
-			console.log('render', _counter++)
-			console.log(this.props);
 			var type = this.props.type || 'checkboxes';
+			console.log('render q', _counter++);
 			return (
 				<div>
 					<h1>{this.props.title}</h1>

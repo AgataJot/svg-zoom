@@ -1,55 +1,54 @@
 var React = require('react/addons');
 var Question = require('../components/question');
 var $ = require('jQuery');
-// var mockjax = require('jquery.mockjax')($);
-
+var jquery = $;
+$.mockjax = require('jquery-mockjax')($, window);
 
 var ReactedApp =
 	React.createClass({
 		displayName: 'Foobar',
 		componentWillMount: function(a, b) {
-			console.log(a, b);
+			console.log('will mount props', this.props);
 		},
+
+		componentDidMount: function() {
+			console.log('did mount props', this.props);
+		},
+
 		componentWillReceiveProps:function(nextProps){
-			if(nextProps.data){
-				this.renderChart(nextProps.data)
+		},
+
+		getInitialState: function() {
+			return {
+				questionNumber: 0
 			}
 		},
-		renderChart(dataset){
-			// d3.select('#' + this.props.target).selectAll('div')
-		  //   .data(dataset)
-		  //   .enter()
-		  //   .append('div')
-		  //   .attr('class', 'bar')
-		  //   .style('height', function (d) {
-		  //     return d.val * 5 + 'px';
-		  //   });
-			console.log('dataset');
-		},
+
 		handleQuestionSkip(params) {
 			console.log(params)
 			this.loadNextQuestion()
 		},
 
 		loadNextQuestion() {
-			jquery.mockjax({
-				url: '/results-api',
-				responseTime: 200,
-				proxy: '/data/results.json'
-			});
+			var qN = this.state.questionNumber
+			if (qN <= this.props.questionsArr.length - 2) {
+				this.setState({questionNumber: qN+1});
+			}
+			debugger
+
 		},
 
 		render(){
+			var q = this.props.questionsArr[this.state.questionNumber];
+			debugger
 			return (
-				<div id="hey">
+				<div>
 					<Question
+						id={this.state.questionNumber}
 						onQuestionSkip={this.handleQuestionSkip}
-						title="Question number one"
-						type="checkboxes"
-						answers={[
-							{text: 'I have a bike'},
-							{text: 'I have a car'}
-						]}/>,
+						title={q.title}
+						type={q.type}
+						answers={q.answers}/>,
 				</div>
 			)
 		}
@@ -57,6 +56,26 @@ var ReactedApp =
 
 module.exports = ReactedApp;
 
-React.render(
-  	<ReactedApp target="foobar" />,
-  	document.getElementById('reactapp'))
+
+// init
+$.mockjax({
+	url: '/results-api',
+	responseTime: 200,
+	proxy: '/data/questions.json'
+});
+
+// load questions
+$.ajax({
+	url: '/results-api',
+	type: 'GET',
+	dataType: 'json'
+}).success(function(data){
+	if (!data.questions) {
+		return
+	}
+	React.render(
+		<ReactedApp target="foobar" questionsArr={data.questions} />,
+		document.getElementById('reactapp'))
+}).error(function(e, f, g){
+	console.log('Something went wrong when fetching questions', e, f, g)
+})

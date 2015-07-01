@@ -8,11 +8,12 @@ var gulp = require('gulp')
   // , bootstrap = require('bootstrap-styl')
   , jeet = require('jeet')
   , jquery = require('jquery')
-  , jqueryMockjax = require('jquery-mockjax')
+  , jquerymockjax = require('jquery-mockjax')
   , addsrc = require('gulp-add-src')
   // , concat = require('gulp-concat')
   // , uglify = require('gulp-uglify')
 
+jquery.mockjax = require('jquery-mockjax')
 
 
 // var defaultPaths = {
@@ -44,14 +45,14 @@ gulp.task('stylus', function () {
 })
 
 gulp.task('browserify', function() {
-    gulp.src([
-      // 'node_modules/snapsvg/dist/snap.svg.js',
-      'node_modules/jquery.mockjax/dist/jquery.mockjax'
-      ])
-      .pipe(concat('lib.js'))
-        .on('error', handleError)
-      .pipe(gulp.dest('public/js'))
-        .on('error', handleError);
+    // gulp.src([
+    //   // 'node_modules/snapsvg/dist/snap.svg.js',
+    //   'node_modules/jquery.mockjax/dist/jquery.mockjax'
+    //   ])
+    //   .pipe(concat('lib.js'))
+    //     .on('error', handleError)
+    //   .pipe(gulp.dest('public/js'))
+    //     .on('error', handleError);
 
     gulp.src(['src/js/main.js'])
       .pipe(browserify({
