@@ -24,6 +24,7 @@
     "gulp-stylus": "^2.0.5",
     "jeet": "^6.1.2",
     "jquery": "^2.1.4",
+    "jquery-mockjax": "^2.0.1",
     "nib": "^1.1.0",
     "reactify": "^1.1.1",
     "requirejs": "^2.1.18"

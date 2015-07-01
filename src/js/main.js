@@ -3,6 +3,7 @@
 
 // define(["jquery"], function($) {
 
+
 //   var ui;
 
 //   require(['ui'], function(Ui) {
@@ -17,17 +18,18 @@
 //   require(['dev']);
 
 
+
 //   require(['search'], function (Search) {
 //     Search.init();
 //   });
 // });
 var $ = require('jQuery');
 var React = require('react/addons');
-var APP = require('./components/app');
+// var APP = require('./components/app');
 var ReactedApp = require('./components/reactedapp');
 
 
-var app = new APP();
+
 // var reactedApp = new ReactedApp();
 // module.exports = APP;
 

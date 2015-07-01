@@ -8,6 +8,7 @@ var gulp = require('gulp')
   // , bootstrap = require('bootstrap-styl')
   , jeet = require('jeet')
   , jquery = require('jquery')
+  , jqueryMockjax = require('jquery-mockjax')
   , addsrc = require('gulp-add-src')
   // , concat = require('gulp-concat')
   // , uglify = require('gulp-uglify')
@@ -44,7 +45,8 @@ gulp.task('stylus', function () {
 
 gulp.task('browserify', function() {
     gulp.src([
-      'node_modules/snapsvg/dist/snap.svg.js'
+      // 'node_modules/snapsvg/dist/snap.svg.js',
+      'node_modules/jquery.mockjax/dist/jquery.mockjax'
       ])
       .pipe(concat('lib.js'))
         .on('error', handleError)
