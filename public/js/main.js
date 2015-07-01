@@ -20481,16 +20481,24 @@ var Question = React.createClass({
 		return React.createElement(
 			'span',
 			{ key: i },
-			React.createElement('input', { type: 'checkbox', placeholder: answer.text, value: answer.text, ref: 'text' }),
+			React.createElement('input', {
+				type: 'checkbox',
+				placeholder: answer.text,
+				value: answer.text,
+				ref: 'text' }),
 			answer.text
 		);
 	},
 
-	renderRadiobutton: function renderRadiobutton(answer, i) {
+	rendeFormField: function rendeFormField(type, answer, i) {
 		return React.createElement(
 			'span',
 			{ key: i },
-			React.createElement('input', { type: 'radio', placeholder: answer.text, value: answer.text, ref: 'text' }),
+			React.createElement('input', {
+				type: type,
+				placeholder: answer.text,
+				value: answer.text,
+				ref: 'text' }),
 			answer.text
 		);
 	},
@@ -20523,14 +20531,33 @@ var Question = React.createClass({
 		);
 	},
 
+	// radio or checbox
+	renderFormElement: function renderFormElement(type) {
+		var self = this;
+		var formFields = [];
+		this.props.answers.forEach(function (answer, i) {
+			return formFields.push(self.rendeFormField(type, answer, i));
+		});
+
+		return React.createElement(
+			'div',
+			null,
+			formFields
+		);
+	},
+
 	handleSkip: function handleSkip(e) {
 		e.preventDefault();
-		this.props.onQuestionNextPrevious({ questionNumberToLoad: this.props.id + 1 });
+		this.props.onQuestionNextPrevious({
+			questionNumberToLoad: this.props.id + 1
+		});
 	},
 
 	handlePrevious: function handlePrevious(e) {
 		e.preventDefault();
-		this.props.onQuestionNextPrevious({ questionNumberToLoad: this.props.id - 1 });
+		this.props.onQuestionNextPrevious({
+			questionNumberToLoad: this.props.id - 1
+		});
 	},
 
 	handleSubmit: function handleSubmit(e) {
@@ -20539,7 +20566,6 @@ var Question = React.createClass({
 	},
 
 	render: function render() {
-		var type = this.props.type || 'checkboxes';
 		console.log('render q', _counter++);
 		return React.createElement(
 			'div',
@@ -20555,7 +20581,7 @@ var Question = React.createClass({
 				React.createElement(
 					'form',
 					{ className: 'commentForm', onSubmit: this.handleSubmit },
-					this[type](),
+					this.renderFormElement(this.props.type),
 					React.createElement('input', { type: 'submit', value: 'Post' }),
 					React.createElement('input', { type: 'button', value: 'Previous', onClick: this.handlePrevious }),
 					React.createElement('input', { type: 'button', value: 'Skip', onClick: this.handleSkip })

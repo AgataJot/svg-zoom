@@ -11,58 +11,46 @@ var Question =
 			console.warn('q will receive props', nextProps);
 		},
 
-		renderCheckbox(answer, i) {
+		rendeFormField(type, answer, i) {
 			return (
 				<span key={i}>
-					<input type="checkbox" placeholder={answer.text} value={answer.text}  ref="text"  />{answer.text}
+					<input
+						type={type}
+						placeholder={answer.text}
+						value={answer.text}
+						ref="text"  />
+							{answer.text}
 				</span>
 			)
 		},
 
-		renderRadiobutton(answer, i) {
-			return (
-				<span key={i}>
-					<input type="radio" placeholder={answer.text} value={answer.text} ref="text"  />{answer.text}
-				</span>
-			)
-		},
-
-		checkbox() {
+		// radio or checbox
+		renderFormElement(type) {
 			var self = this;
-			var checkboxes = [];
+			var formFields = [];
 			this.props.answers.forEach(
-				(answer, i) => checkboxes.push(self.renderCheckbox(answer, i))
+				(answer, i) => formFields.push(self.rendeFormField(type, answer, i))
 			)
 
 			return(
 				<div>
-					{checkboxes}
-				</div>
-			)
-		},
-
-		radio() {
-			var self = this;
-			var radiobuttons = [];
-			this.props.answers.forEach(
-				(answer, i) => radiobuttons.push(self.renderRadiobutton(answer, i))
-			)
-
-			return(
-				<div>
-					{radiobuttons}
+					{formFields}
 				</div>
 			)
 		},
 
 		handleSkip(e) {
 			e.preventDefault();
-			this.props.onQuestionNextPrevious({questionNumberToLoad: this.props.id+1});
+			this.props.onQuestionNextPrevious({
+				questionNumberToLoad: this.props.id+1
+			});
 		},
 
 		handlePrevious(e) {
 			e.preventDefault();
-			this.props.onQuestionNextPrevious({questionNumberToLoad: this.props.id-1});
+			this.props.onQuestionNextPrevious({
+				questionNumberToLoad: this.props.id-1
+			});
 		},
 
 		handleSubmit(e) {
@@ -71,14 +59,13 @@ var Question =
 		},
 
 		render(){
-			var type = this.props.type || 'checkboxes';
 			console.log('render q', _counter++);
 			return (
 				<div>
 					<h1>{this.props.title}</h1>
 					<div>
 						<form className="commentForm" onSubmit={this.handleSubmit}>
-							{	this[type]() }
+							{	this.renderFormElement(this.props.type) }
 							<input type="submit" value="Post" />
 							<input type="button" value="Previous" onClick={this.handlePrevious}/>
 							<input type="button" value="Skip" onClick={this.handleSkip}/>
