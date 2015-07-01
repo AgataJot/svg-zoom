@@ -7,15 +7,15 @@ $.mockjax = require('jquery-mockjax')($, window);
 var ReactedApp =
 	React.createClass({
 		displayName: 'Foobar',
-		componentWillMount: function(a, b) {
+		componentWillMount(a, b) {
 			console.log('will mount props', this.props);
 		},
 
-		componentDidMount: function() {
+		componentDidMount() {
 			console.log('did mount props', this.props);
 		},
 
-		componentWillReceiveProps:function(nextProps){
+		componentWillReceiveProps(nextProps){
 		},
 
 		getInitialState: function() {
@@ -34,13 +34,10 @@ var ReactedApp =
 			if (qN <= this.props.questionsArr.length - 2) {
 				this.setState({questionNumber: qN+1});
 			}
-			debugger
-
 		},
 
 		render(){
 			var q = this.props.questionsArr[this.state.questionNumber];
-			debugger
 			return (
 				<div>
 					<Question

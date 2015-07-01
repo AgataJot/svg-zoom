@@ -7,13 +7,9 @@ var Question =
 		componentWillMount() {
 		},
 
-		componentWillReceiveProps:function(nextProps){
+		componentWillReceiveProps(nextProps){
 			console.warn('q will receive props', nextProps);
 		},
-
-		// shouldComponentUpdate: function(nextProps, nextState) {
-		// 	console.warn('q should update', nextProps, nextState);
-		// },
 
 		renderCheckbox(answer, i) {
 			return (
@@ -34,9 +30,9 @@ var Question =
 		checkbox() {
 			var self = this;
 			var checkboxes = [];
-			this.props.answers.forEach(function(answer, i){
-				checkboxes.push(self.renderCheckbox(answer, i));
-			})
+			this.props.answers.forEach(
+				(answer, i) => checkboxes.push(self.renderCheckbox(answer, i))
+			)
 
 			return(
 				<div>
@@ -48,9 +44,9 @@ var Question =
 		radio() {
 			var self = this;
 			var radiobuttons = [];
-			this.props.answers.forEach(function(answer, i){
-				radiobuttons.push(self.renderRadiobutton(answer, i));
-			})
+			this.props.answers.forEach(
+				(answer, i) => radiobuttons.push(self.renderRadiobutton(answer, i))
+			)
 
 			return(
 				<div>

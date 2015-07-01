@@ -20477,10 +20477,6 @@ var Question = React.createClass({
 		console.warn('q will receive props', nextProps);
 	},
 
-	// shouldComponentUpdate: function(nextProps, nextState) {
-	// 	console.warn('q should update', nextProps, nextState);
-	// },
-
 	renderCheckbox: function renderCheckbox(answer, i) {
 		return React.createElement(
 			'span',
@@ -20503,7 +20499,7 @@ var Question = React.createClass({
 		var self = this;
 		var checkboxes = [];
 		this.props.answers.forEach(function (answer, i) {
-			checkboxes.push(self.renderCheckbox(answer, i));
+			return checkboxes.push(self.renderCheckbox(answer, i));
 		});
 
 		return React.createElement(
@@ -20517,7 +20513,7 @@ var Question = React.createClass({
 		var self = this;
 		var radiobuttons = [];
 		this.props.answers.forEach(function (answer, i) {
-			radiobuttons.push(self.renderRadiobutton(answer, i));
+			return radiobuttons.push(self.renderRadiobutton(answer, i));
 		});
 
 		return React.createElement(
@@ -20603,12 +20599,10 @@ var ReactedApp = React.createClass({
 		if (qN <= this.props.questionsArr.length - 2) {
 			this.setState({ questionNumber: qN + 1 });
 		}
-		debugger;
 	},
 
 	render: function render() {
 		var q = this.props.questionsArr[this.state.questionNumber];
-		debugger;
 		return React.createElement(
 			'div',
 			null,
