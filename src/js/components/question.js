@@ -57,7 +57,12 @@ var Question =
 
 		handleSkip(e) {
 			e.preventDefault();
-			this.props.onQuestionSkip({author: 'Agata', text: this.props.title});
+			this.props.onQuestionNextPrevious({questionNumberToLoad: this.props.id+1});
+		},
+
+		handlePrevious(e) {
+			e.preventDefault();
+			this.props.onQuestionNextPrevious({questionNumberToLoad: this.props.id-1});
 		},
 
 		handleSubmit(e) {
@@ -75,6 +80,7 @@ var Question =
 						<form className="commentForm" onSubmit={this.handleSubmit}>
 							{	this[type]() }
 							<input type="submit" value="Post" />
+							<input type="button" value="Previous" onClick={this.handlePrevious}/>
 							<input type="button" value="Skip" onClick={this.handleSkip}/>
 						</form>
 					</div>

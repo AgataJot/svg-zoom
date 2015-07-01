@@ -20525,7 +20525,12 @@ var Question = React.createClass({
 
 	handleSkip: function handleSkip(e) {
 		e.preventDefault();
-		this.props.onQuestionSkip({ author: 'Agata', text: this.props.title });
+		this.props.onQuestionNextPrevious({ questionNumberToLoad: this.props.id + 1 });
+	},
+
+	handlePrevious: function handlePrevious(e) {
+		e.preventDefault();
+		this.props.onQuestionNextPrevious({ questionNumberToLoad: this.props.id - 1 });
 	},
 
 	handleSubmit: function handleSubmit(e) {
@@ -20552,6 +20557,7 @@ var Question = React.createClass({
 					{ className: 'commentForm', onSubmit: this.handleSubmit },
 					this[type](),
 					React.createElement('input', { type: 'submit', value: 'Post' }),
+					React.createElement('input', { type: 'button', value: 'Previous', onClick: this.handlePrevious }),
 					React.createElement('input', { type: 'button', value: 'Skip', onClick: this.handleSkip })
 				)
 			)
@@ -20601,6 +20607,22 @@ var ReactedApp = React.createClass({
 		}
 	},
 
+	handleLoadNextPrevious: function handleLoadNextPrevious(params) {
+		var qN = this.state.questionNumber;
+
+		// load next
+		if (this.state.questionNumber < params.questionNumberToLoad && qN > this.props.questionsArr.length - 2) {
+			return;
+		}
+
+		//load prev
+		if (this.state.questionNumber > params.questionNumberToLoad && qN <= 0) {
+			return;
+		}
+
+		this.setState({ questionNumber: params.questionNumberToLoad });
+	},
+
 	render: function render() {
 		var q = this.props.questionsArr[this.state.questionNumber];
 		return React.createElement(
@@ -20608,7 +20630,7 @@ var ReactedApp = React.createClass({
 			null,
 			React.createElement(Question, {
 				id: this.state.questionNumber,
-				onQuestionSkip: this.handleQuestionSkip,
+				onQuestionNextPrevious: this.handleLoadNextPrevious,
 				title: q.title,
 				type: q.type,
 				answers: q.answers }),

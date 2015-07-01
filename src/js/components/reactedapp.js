@@ -36,13 +36,31 @@ var ReactedApp =
 			}
 		},
 
+		handleLoadNextPrevious(params) {
+			var qN = this.state.questionNumber
+
+			// load next
+			if ((this.state.questionNumber < params.questionNumberToLoad) &&
+				  (qN > this.props.questionsArr.length - 2)) {
+					return
+			}
+
+			//load prev
+			if ((this.state.questionNumber > params.questionNumberToLoad) &&
+				  (qN <= 0)) {
+					return
+			}
+
+			this.setState({questionNumber: params.questionNumberToLoad});
+		},
+
 		render(){
 			var q = this.props.questionsArr[this.state.questionNumber];
 			return (
 				<div>
 					<Question
 						id={this.state.questionNumber}
-						onQuestionSkip={this.handleQuestionSkip}
+						onQuestionNextPrevious={this.handleLoadNextPrevious}
 						title={q.title}
 						type={q.type}
 						answers={q.answers}/>,
